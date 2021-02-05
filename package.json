@@ -1,0 +1,21 @@
+{
+  "name": "automacao",
+  "version": "1.0.0",
+  "description": "Curso de Cypress da Escola TAT",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress run"
+  },
+  "keywords": [
+    "cypress",
+    "test",
+    "automation",
+    "e2e"
+  ],
+  "author": "Leonardo Serafin",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "cypress": "^6.4.0"
+  }
+}
