@@ -8,7 +8,7 @@ describe("Tickets", () => {
         cy.get("#first-name").type(firstName);
         cy.get("#last-name").type(lastName);
         cy.get("#email").type("leogserafin@hotmail.com");
-        cy.get("#requests").type("Testing");
+        cy.get("#requests").type("Ice Tea");
         cy.get("#signature").type(`${firstName} ${lastName}`);
     });
 
@@ -48,5 +48,58 @@ describe("Tickets", () => {
             .type("leogserafin@hotmail.com");
 
         cy.get("#email.invalid").should("not.exist");
-    })
+    });
+
+    it("putting all together, and then reseting it all", () => {
+        const firstName = "Leonardo";
+        const lastName = "Serafin";
+        const fullName = `${firstName} ${lastName}`;
+
+        cy.get("#first-name").type(firstName);
+        cy.get("#last-name").type(lastName);
+        cy.get("#email").type("leogserafin@hotmail.com");
+        cy.get("#ticket-quantity").select("2");
+        cy.get("#vip").check();
+        cy.get("#friend").check();
+        cy.get("#requests").type("Ice Tea");
+
+        cy.get(".agreement p").should(
+            "contain",
+            `I, ${fullName}, wish to buy 2 VIP tickets.`
+        );
+
+        cy.get("#agree").click();
+        cy.get("#signature").type(fullName);
+
+        cy.get("button[type='submit']")
+            .as("submitButton")
+            .should("not.be.disabled");
+
+        
+        cy.get("button[type='reset']").click();
+
+        cy.get("@submitButton").should("be.disabled");
+    });
+
+    it("fills mandatory using supoort command", ()=>{
+        const customer = {
+          firstName: "Renato",
+          lastName: "Silva",
+          email: "renatosilva@example.com"  
+        };
+
+        cy.fillMandatoryFields(customer);
+
+        
+        cy.get("button[type='submit']")
+            .as("submitButton")
+            .should("not.be.disabled");
+
+            
+        cy.get("#agree").uncheck();
+
+        cy.get("@submitButton").should("be.disabled");
+    });
+
+
 });
